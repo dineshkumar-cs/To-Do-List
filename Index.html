@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+      body{
+    margin:0px;
+    padding:0px;
+}
+#content{background-color:darkgrey;
+    text-align: center;
+    display:flex;
+   
+    flex-direction: column;
+    margin:auto;
+    width:500px;
+    height:500px;
+    border-radius: 20px;
+    border-color: blue
+    ;
+    text-align: center;
+    padding:9px 9px;
+    overflow-y:scroll;
+
+}
+#content::-webkit-scrollbar{
+    display:none
+}
+#form{
+    display:flex;
+    padding:0px;
+    border-radius:10px 10px;
+    margin:0% 15%;
+}
+
+
+
+#page{
+    margin:6px auto 6px;
+    width:600px;
+    height:800px;
+    background-color:black;
+    color:white;
+    border-radius: 50px;
+    text-align: center;
+}
+#content h1{
+     text-align: start;
+    border-style: solid;
+    border-color:violet;
+    border-width: 3px;
+    border-radius:70px 0px 70px 0px;
+    color:white;
+    background-color:black;
+    width:480px;
+    text-align:center;
+    margin:10px auto;
+    padding-bottom:10px;
+    padding:10px;
+    overflow-wrap: break-word;
+
+}
+#page h1{
+    font-family: Arial, Helvetica, sans-serif;
+    color:white;
+    padding-top: 30px;
+}
+input{
+    padding-left: 20px;
+    width:500px;
+    height:30px;
+    border-radius: 20px 0px 0px 20px;
+    
+
+}
+button{
+    width:70px;
+    background-color: orange;
+    border-radius: 0px 20px 20px 0px;
+    
+}
+    </style>
+</head>
+<body>
+    <div id="page">
+    
+        <h1><u><i>My To-do list</i></u></h1>
+        <div id="form">
+        <input type="text" placeholder=" Add title  .  .  .  ." id="input"  required>
+        <button id="btn">Add</button>
+        </div>
+        <br><br><br>
+        <div id="content">
+          
+        </div>
+        </div>
+        <script>
+          
+          var content=document.getElementById("content");
+
+var button=document.getElementById("btn");
+
+var input=document.getElementById("input");  
+
+var list=[];
+window.onload=()=>{
+  list=JSON.parse(localStorage.getItem('list')) || [];
+  list.forEach(todo=>addtodo(todo));
+}
+
+button.addEventListener('click',()=>{
+  list.push(input.value);
+  localStorage.setItem('list',JSON.stringify(list))
+  addtodo(input.value);
+  input.value=' '
+})
+
+function addtodo(todo){
+
+  let h1=document.createElement('h1');
+  h1.innerText=todo;
+  
+  content.appendChild(h1);
+
+  h1.addEventListener('click',()=>{
+  h1.style.textDecoration="line-through";
+  h1.style.textDecorationColor="blue";
+  h1.style.textDecorationThickness="thick"
+  remove(todo);
+});
+
+  h1.addEventListener('dblclick',()=>{
+  content.removeChild(h1)
+  remove(todo);
+});
+
+
+}
+function remove(todo){
+  let index=list.indexOf(todo);
+  if(index>0){
+    list.splice(index,1);
+  }
+  localStorage.setItem('list',JSON.stringify(list))
+}
+        </script>
+</body>
+</html>
